@@ -77,7 +77,8 @@
 	
 				<div id="user">
 					<div id="modifyForm">
-						<form action="" method="">
+						<form action="/mysite2/user" method="get">
+						<input type="text" value="modify">
 	
 							<!-- 아이디 -->
 							<div class="form-group">
