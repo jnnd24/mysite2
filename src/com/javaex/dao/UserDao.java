@@ -78,7 +78,6 @@ public class UserDao {
 			pstmt.setString(2, userVo.getPassword());
 			pstmt.setString(3, userVo.getName());
 			pstmt.setString(4, userVo.getGender());
-			
 			//실행
 			count = pstmt.executeUpdate();
 			
@@ -144,54 +143,6 @@ public class UserDao {
 		
 	}
 	
-	//사용자 정보 가져오기 (로그인 시 사용)
-		public UserVo getUserId(UserVo userVo) {
-			UserVo authUser = null;
-			
-			getConnection();
-			
-			try {
-				//SQL준비
-				String query = "";
-				query += " select no, id, password, name, gender ";
-				query += " from users ";
-				query += " where no = ? ";
-				
-				//바인딩
-				pstmt = conn.prepareStatement(query);
-				pstmt.setInt(1, userVo.getNo());
-				
-				//실행
-				rs = pstmt.executeQuery();
-				
-				//결과처리
-				while(rs.next()) {
-					int no = rs.getInt("no");
-					String id = rs.getString("id");
-					String password = rs.getString("password");
-					String name = rs.getString("name");
-					String gender = rs.getString("gender");
-					
-					authUser = new UserVo();
-					authUser.setNo(no);
-					authUser.setId(id);
-					authUser.setPassword(password);
-					authUser.setName(name);
-					authUser.setGender(gender);
-					
-					
-				}
-				
-				
-				
-			}catch(SQLException e) {
-				System.out.println("error:" + e);
-			}
-			
-			close();
-			return authUser;
-			
-		}
 	
 	//회원정보 수정
 	public int update(UserVo userVo) {
@@ -202,19 +153,26 @@ public class UserDao {
 			//SQL준비
 			String query = "";
 			query += " update users ";
-			query += " set name = '장성찬' ";
-			query += "     , password = '1234' ";
-			query += "     , gender = 'male' ";
-			query += " where no = 2 ";
+			query += " set name = ? ";
+			query += "     ,password = ? ";
+			query += "     ,gender = ? ";
+			query += " where no = ? ";
 			
 			//바인딩
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, userVo.getId());
-			pstmt.setString(2, userVo.getPassword());
 			
+			pstmt.setString(1, userVo.getName());
+			pstmt.setString(2, userVo.getPassword());
+			pstmt.setString(3, userVo.getGender());
+			pstmt.setInt(4, userVo.getNo());
+			
+			System.out.println(query);
+			System.out.println(userVo.toString());
 			//실행
+			count = pstmt.executeUpdate(query);
 			
 			//결과처리
+			System.out.println(count + "건 수정되었습니다.");
 			
 			
 			
