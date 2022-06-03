@@ -78,7 +78,8 @@
 				<div id="user">
 					<div id="modifyForm">
 						<form action="/mysite2/user" method="get">
-						<input type="text" value="modify">
+						<input type="text" name="action" value="modify">
+						<input type="text" name="no" value="<%=authUser.getNo() %>">
 	
 							<!-- 아이디 -->
 							<div class="form-group">
@@ -89,13 +90,13 @@
 							<!-- 비밀번호 -->
 							<div class="form-group">
 								<label class="form-text" for="input-pass">패스워드</label> 
-								<input type="text" id="input-pass" name="password" value="" placeholder="비밀번호를 입력하세요"	>
+								<input type="text" id="input-pass" name="password" value="<%=authUser.getPassword() %>" placeholder="비밀번호를 입력하세요"	>
 							</div>
 	
 							<!-- 이메일 -->
 							<div class="form-group">
 								<label class="form-text" for="input-name">이름</label> 
-								<input type="text" id="input-name" name="name" value="" placeholder="이름을 입력하세요">
+								<input type="text" id="input-name" name="name" value="<%=authUser.getName() %>" placeholder="이름을 입력하세요">
 							</div>
 	
 							<!-- //나이 -->
