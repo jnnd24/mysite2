@@ -37,6 +37,7 @@ and password = '1234';
 
 update users
 set name = 'Àå¼ºÂù'
+    , id = 'aaaa'
     , password = '1234'
     , gender = 'male'
 where no = 2;

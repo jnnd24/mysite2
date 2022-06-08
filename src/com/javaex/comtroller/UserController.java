@@ -86,7 +86,7 @@ public class UserController extends HttpServlet {
 			//dao
 			UserDao userDao = new UserDao();
 			UserVo authUser = userDao.getUser(userVo); // id, password로 유저를 찾은다음에, 유저정보 전체를 불러오는 메소드
-			
+			System.out.println(userVo.toString());
 			//authUser 주소있으면 로그인 성공
 			//authUser 주소없으면 로그인 실패
 			if(authUser == null) {
@@ -115,15 +115,32 @@ public class UserController extends HttpServlet {
 			
 		}else if("modifyForm".equals(action)) {
 			System.out.println("UserController>modifyForm진입");
-
-			//회원정보수정 폼으로 포워딩
+			
+			//로그인한 사람의 no를 세션에서 불러오기
+			HttpSession session = request.getSession();
+			UserVo authUser = (UserVo)session.getAttribute("authUser");
+			int no = authUser.getNo();
+			
+			//no로 모든정보 가져오기
+			UserDao userDao = new UserDao();
+			UserVo userVo = userDao.getUser(no);
+			
+			System.out.println("userVo : " + userVo);
+			//attribut에 Vo담아서 회원정보수정 폼으로 포워딩
+			request.setAttribute("userVo", userVo);
 			WebUtil.forward(request, response, "/WEB-INF/views/user/modifyForm.jsp");
 			
 		}else if("modify".equals(action)) {
 			System.out.println("UserController>modify진입");
 			
+			//세션에서 no 그대로 가져오기
+			HttpSession session = request.getSession();
+			UserVo authUser = (UserVo)session.getAttribute("authUser");
+			int no = authUser.getNo();
+			
+			
+			
 			//1.파라미터꺼내기
-			int no = Integer.parseInt(request.getParameter("no"));
 			String password = request.getParameter("password");
 			String name = request.getParameter("name");
 			String gender = request.getParameter("gender");
@@ -143,7 +160,7 @@ public class UserController extends HttpServlet {
 			userDao.update(userVo);
 			
 			//4.리다이렉팅
-			//WebUtil.redirect(request, response, "/mysite2/main");
+			WebUtil.redirect(request, response, "/mysite2/main");
 			
 		}
 		

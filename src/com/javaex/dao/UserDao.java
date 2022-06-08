@@ -101,7 +101,7 @@ public class UserDao {
 		try {
 			//SQL준비
 			String query = "";
-			query += " select no, id, password, name, gender ";
+			query += " select no, name ";
 			query += " from users ";
 			query += " where id = ? ";
 			query += " and password = ? ";
@@ -117,17 +117,11 @@ public class UserDao {
 			//결과처리
 			while(rs.next()) {
 				int no = rs.getInt("no");
-				String id = rs.getString("id");
-				String password = rs.getString("password");
 				String name = rs.getString("name");
-				String gender = rs.getString("gender");
 				
 				authUser = new UserVo();
 				authUser.setNo(no);
-				authUser.setId(id);
-				authUser.setPassword(password);
 				authUser.setName(name);
-				authUser.setGender(gender);
 				
 				
 			}
@@ -143,6 +137,55 @@ public class UserDao {
 		
 	}
 	
+	//사용자 정보 가져오기 (회원정보 수정)
+	public UserVo getUser(int no) {
+		UserVo userVo = null;
+		
+		getConnection();
+		
+		try {
+			//SQL준비
+			String query = "";
+			query += " select  no, ";
+			query += "         id, ";
+			query += "         password, ";
+			query += "         name, ";
+			query += "         gender ";
+			query += " from users ";
+			query += " where no = ? ";
+			
+			//바인딩
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, no);
+			System.out.println("no : " + no + query);
+			
+			//실행
+			rs = pstmt.executeQuery();
+			
+			//결과처리
+			while(rs.next()) {
+				int userNo = rs.getInt("no");
+				String id = rs.getString("id");
+				String password = rs.getString("password");
+				String name = rs.getString("name");
+				String gender = rs.getString("gender");
+				
+				userVo = new UserVo(userNo, id, password, name, gender);
+				
+				
+			}
+			
+			//.out.println("Dao.userVo : " + userVo);
+			
+		}catch(SQLException e) {
+			System.out.println("error:" + e);
+		}
+		
+		close();
+		return userVo;
+		
+	}
+	
 	
 	//회원정보 수정
 	public int update(UserVo userVo) {
@@ -153,9 +196,9 @@ public class UserDao {
 			//SQL준비
 			String query = "";
 			query += " update users ";
-			query += " set name = ? ";
-			query += "     ,password = ? ";
-			query += "     ,gender = ? ";
+			query += " set name = ?, ";
+			query += "     password = ?, ";
+			query += "     gender = ? ";
 			query += " where no = ? ";
 			
 			//바인딩
@@ -167,9 +210,9 @@ public class UserDao {
 			pstmt.setInt(4, userVo.getNo());
 			
 			System.out.println(query);
-			System.out.println(userVo.toString());
+			
 			//실행
-			count = pstmt.executeUpdate(query);
+			count = pstmt.executeUpdate();
 			
 			//결과처리
 			System.out.println(count + "건 수정되었습니다.");
