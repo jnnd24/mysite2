@@ -43,6 +43,21 @@ public class BoardController extends HttpServlet {
 		}else if("read".equals(action)) {
 			System.out.println("read진입");//진입성공
 			
+			//파라미터 가져오기
+			int no = Integer.parseInt(request.getParameter("no"));
+
+			//조회수 올리기
+			BoardDao boardDao = new BoardDao();
+			boardDao.hitup(no);
+			
+			
+			
+			//Dao로 게시물 불러오기
+			BoardVo getBoard = boardDao.getBoard(no);
+			
+			//어트리뷰트로 보내주기
+			request.setAttribute("getBoard", getBoard);
+			
 			WebUtil.forward(request, response, "/WEB-INF/views/board/read.jsp");
 		
 		//삭제
@@ -55,6 +70,8 @@ public class BoardController extends HttpServlet {
 			boardDao.delete(no);
 			
 			WebUtil.redirect(request, response, "./board?action=list");
+		}else if("a".equals(action)) {
+			
 		}
 		
 		

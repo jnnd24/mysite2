@@ -135,6 +135,71 @@ public class BoardDao {
 		
 	}
 	
+	//게시판열기
+	public BoardVo getBoard(int no) {
+		BoardVo getBoard = null;
+		getConnection();
+		
+		
+		try {
+			//sql , 바인딩, 실행
+			String query = "";
+			query += " select no ,title ,content ,hit ,to_char(reg_date, 'YY-MM-DD HH24:MI') reg_date ,user_no ";
+			query += " from board ";
+			query += " where no = ? ";
+			
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, no);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				String title = rs.getString("title");
+				String content = rs.getString("content");
+				int hit = rs.getInt("hit");
+				String regDate = rs.getString("reg_date");
+				int userNo = rs.getInt("user_no");
+				
+				getBoard = new BoardVo(no, title, content, hit, regDate, userNo);
+			}
+		}catch (SQLException e) {
+		    System.out.println("error:" + e);
+		}
+		close();
+		return getBoard;
+	}
 	
+	
+	
+	
+	
+	//조회수 올리기
+		public int hitup(int no) {
+			int count = 0;
+			getConnection();
+			
+			try {
+				//sql문 // 바인딩 // 실행
+				String query = "";
+				query += " update board ";
+				query += " set hit = hit + 1 ";
+				query += " where no = ? ";
+
+				pstmt = conn.prepareStatement(query);
+				
+				pstmt.setInt(1, no);
+				
+				count = pstmt.executeUpdate();
+				
+				System.out.println(count + "건 조회되었습니다.");
+				
+			}catch (SQLException e) {
+			    System.out.println("error:" + e);
+			}
+			close();
+			return count;
+			
+			
+		}
 		
 }

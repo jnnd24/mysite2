@@ -77,7 +77,7 @@
 								<tbody>
 									<tr>
 										<td>${status.count }</td>
-										<td class="text-left"><a href="./board?action=read">${boardVo.title }</a></td>
+										<td class="text-left"><a href="./board?action=read&no=${boardVo.no }">${boardVo.title }</a></td>
 										<td>${boardVo.userNo }</td>
 										<td>${boardVo.hit }</td>
 										<td>${boardVo.regDate }</td>
