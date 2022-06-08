@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 
 <link href="/mysite2/assets/css/mysite.css" rel="stylesheet" type="text/css">
+<link href="/mysite2/assets/css/guestbook.css" rel="stylesheet" type="text/css">
 
 </head>
 
@@ -21,9 +22,9 @@
 		<div id="nav">
 			<ul class="clearfix">
 				<li><a href="">입사지원서</a></li>
-				<li><a href="">게시판</a></li>
+				<li><a href="./board?action=list">게시판</a></li>
 				<li><a href="">갤러리</a></li>
-				<li><a href="">방명록</a></li>
+				<li><a href="gbc?action=addList">방명록</a></li>
 			</ul>
 		</div>
 		<!-- //nav -->
@@ -55,41 +56,41 @@
 				<div id="guestbook">
 					<form action="./gbc" method="get">
 					<input type = "hidden" name = "action" value = "add">
-						<table id="guestAdd" border="1">
-							<%-- <colgroup>
+						<table id="guestAdd">
+							<colgroup>
 								<col style="width: 70px;">
 								<col>
 								<col style="width: 70px;">
 								<col>
-							</colgroup> --%>
+							</colgroup>
 							<tbody>
 								<tr>
 									<th><label class="form-text" for="input-uname">이름</label></th>
 									<td><input id="input-uname" type="text" name="name" value =""></td>
-									<th><label class="form-text" for="input-password">비밀번호</label></th>
+									<th><label class="form-text" for="input-password">패스워드</label></th>
 									<td><input id="input-password" type="password" name="password" value=""></td>
 								</tr>
 								<tr>
-									<td colspan="4"><textarea name="content" cols="70" rows="5"></textarea></td>
+									<td colspan="4"><textarea name="content" cols="72" rows="5"></textarea></td>
 								</tr>
 								<tr class="button-area">
-									<td colspan="4" class="text-center"><button type="submit">확인</button></td>
+									<td colspan="4" class="text-center"><button type="submit">등록</button></td>
 								</tr>
 							</tbody>
 							
 						</table>
 						<!-- //guestWrite -->
 					</form>	
-					<c:forEach items="${guestbookList }" var="gbList">
-					<table border="1" >
-						<%-- <colgroup>
+					<c:forEach items="${guestbookList }" var="gbList" varStatus="status">
+					<table class="guestRead">
+						<colgroup>
 							<col style="width: 10%;">
 							<col style="width: 40%;">
 							<col style="width: 40%;">
 							<col style="width: 10%;">
-						</colgroup> --%>
+						</colgroup>
 						<tr>
-							<td>${gbList.no }</td>
+							<td>${status.count }</td>
 							<td>${gbList.name }</td>
 							<td>${gbList.regDate }</td>
 							<td><a href="./gbc?action=deleteForm&no=${gbList.no }">[삭제]</a></td>

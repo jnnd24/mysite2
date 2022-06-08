@@ -22,9 +22,9 @@
 		<div id="nav">
 			<ul class="clearfix">
 				<li><a href="">입사지원서</a></li>
-				<li><a href="">게시판</a></li>
+				<li><a href="./board?action=list">게시판</a></li>
 				<li><a href="">갤러리</a></li>
-				<li><a href="">방명록</a></li>
+				<li><a href="gbc?action=addList">방명록</a></li>
 			</ul>
 		</div>
 		<!-- //nav -->
@@ -78,7 +78,7 @@
 									<tr>
 										<td>${status.count }</td>
 										<td class="text-left"><a href="./board?action=read&no=${boardVo.no }">${boardVo.title }</a></td>
-										<td>${boardVo.userNo }</td>
+										<td>${boardVo.name }</td>
 										<td>${boardVo.hit }</td>
 										<td>${boardVo.regDate }</td>
 										<!-- 자신이 작성한 경우에만 삭제 노출 -->
@@ -111,7 +111,7 @@
 						</div>
 						<!-- 로그인 한 사람만 글쓰기가 보임 -->
 						<c:if test="${not empty authUser}">
-							<a id="btn_write" href="">글쓰기</a>
+							<a id="btn_write" href="./board?action=writeForm">글쓰기</a>
 						</c:if>
 					
 					</div>

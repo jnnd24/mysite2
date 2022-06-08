@@ -8,10 +8,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.javaex.dao.BoardDao;
 import com.javaex.util.WebUtil;
 import com.javaex.vo.BoardVo;
+import com.javaex.vo.UserVo;
 
 @WebServlet("/board")
 public class BoardController extends HttpServlet {
@@ -70,7 +72,82 @@ public class BoardController extends HttpServlet {
 			boardDao.delete(no);
 			
 			WebUtil.redirect(request, response, "./board?action=list");
-		}else if("a".equals(action)) {
+		
+		//수정 폼
+		}else if("modifyForm".equals(action)) {
+			System.out.println("modifyForm진입");//진입성공
+
+			int no = Integer.parseInt(request.getParameter("no"));
+
+			//Dao로 게시물 불러오기
+			BoardDao boardDao = new BoardDao();
+			BoardVo getBoard = boardDao.getBoard(no);
+			
+			//어트리뷰트로 보내주기
+			request.setAttribute("getBoard", getBoard);
+			
+			WebUtil.forward(request, response, "/WEB-INF/views/board/modifyForm.jsp");
+		
+		//수정
+		}else if("modify".equals(action)) {
+			System.out.println("modify진입");//진입성공
+
+			//파라미터 가져오기
+			int no = Integer.parseInt(request.getParameter("no"));
+			String title = request.getParameter("title");
+			String content = request.getParameter("content");
+			
+			//Vo로 만들기
+			BoardVo boardVo = new BoardVo();
+			boardVo.setNo(no);
+			boardVo.setTitle(title);
+			boardVo.setContent(content);
+			
+			//Dao에서 수정하기
+			BoardDao boardDao = new BoardDao();
+			boardDao.update(boardVo);
+			
+			//리다이렉트
+			WebUtil.redirect(request, response, "./board?action=list");
+		
+		//등록
+		}else if("writeForm".equals(action)) {
+			System.out.println("writeForm진입");//진입성공
+			
+			//로워딩
+			WebUtil.forward(request, response, "/WEB-INF/views/board/writeForm.jsp");
+			
+		}else if("write".equals(action)) {
+			System.out.println("write진입");//진입성공
+			
+			
+			//세션에서 로그인정보 가져오기
+			HttpSession session = request.getSession();
+			UserVo authUser = (UserVo)session.getAttribute("authUser");
+			int no = authUser.getNo();
+			
+			/*
+			//이름 가져오기
+			UserVo userVo = boardDao.getUsername(no);
+			String name = userVo.getName();
+			*/
+			
+			//파라미터 가져오기
+			String title = request.getParameter("title");
+			String content = request.getParameter("content");
+			
+			//vo로 담아서 보내기
+			BoardVo boardVo = new BoardVo();
+			boardVo.setNo(no);
+			boardVo.setTitle(title);
+			boardVo.setContent(content);
+
+			BoardDao boardDao = new BoardDao();
+			boardDao.insert(boardVo);
+			
+			//리다이렉트
+			WebUtil.redirect(request, response, "./board?action=list");
+			
 			
 		}
 		

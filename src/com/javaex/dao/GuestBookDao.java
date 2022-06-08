@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.javaex.vo.BoardVo;
 import com.javaex.vo.GuestBookVo;
 
 public class GuestBookDao {
@@ -160,6 +161,10 @@ public class GuestBookDao {
 		return count;
 		
 	}
+	
+	
+		
+		
 	
 	
 	

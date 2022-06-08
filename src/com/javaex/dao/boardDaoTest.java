@@ -1,7 +1,5 @@
 package com.javaex.dao;
 
-import com.javaex.vo.BoardVo;
-
 public class boardDaoTest {
 
 	public static void main(String[] args) {
@@ -16,11 +14,12 @@ public class boardDaoTest {
 		List<BoardVo> boardList = boardDao.getBoardList();
 		//시간표시 테스트
 		System.out.println(boardList.get(1).getRegDate());
-		*/
+		
 		
 		BoardVo getBoard = boardDao.getBoard(3);
 		System.out.println(getBoard);
-		
+		*/
+		System.out.println(boardDao.getUsername(8));
 		
 	}
 

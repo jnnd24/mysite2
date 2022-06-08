@@ -22,9 +22,9 @@
 		<div id="nav">
 			<ul class="clearfix">
 				<li><a href="">입사지원서</a></li>
-				<li><a href="">게시판</a></li>
+				<li><a href="./board?action=list">게시판</a></li>
 				<li><a href="">갤러리</a></li>
-				<li><a href="">방명록</a></li>
+				<li><a href="gbc?action=addList">방명록</a></li>
 			</ul>
 		</div>
 		<!-- //nav -->
@@ -60,7 +60,7 @@
 							<!-- 작성자 -->
 							<div class="form-group">
 								<span class="form-text">작성자</span>
-								<span class="form-value">${getBoard.userNo }</span>
+								<span class="form-value">${getBoard.name }</span>
 							</div>
 							
 							<!-- 조회수 -->
@@ -87,9 +87,12 @@
 									${getBoard.content }
 								</span>
 							</div>
-							
-							<a id="btn_modify" href="">수정</a>
-							<a id="btn_modify" href="">목록</a>
+							>
+							<!-- 자신이 작성한 경우에만 수정 노출 -->
+							<c:if test="${getBoard.userNo == authUser.no }">
+								<a id="btn_modify" href="./board?action=modifyForm&no=${getBoard.no }">수정</a>
+							</c:if>
+							<a id="btn_modify" href="./board?action=list">목록</a>
 							
 						</form>
 						<!-- //form -->

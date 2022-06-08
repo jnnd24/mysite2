@@ -22,6 +22,8 @@ public class UserController extends HttpServlet {
     //메소드
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		//포스트에서 한글꺠지는 현상 방지
+		request.setCharacterEncoding("UTF-8");
 		
 		//user에서 action을 꺼낸다
 		String action = request.getParameter("action");

@@ -20,9 +20,9 @@
 		<div id="nav">
 			<ul class="clearfix">
 				<li><a href="">입사지원서</a></li>
-				<li><a href="">게시판</a></li>
+				<li><a href="./board?action=list">게시판</a></li>
 				<li><a href="">갤러리</a></li>
-				<li><a href="">방명록</a></li>
+				<li><a href="gbc?action=addList">방명록</a></li>
 			</ul>
 		</div>
 		<!-- //nav -->
@@ -55,8 +55,8 @@
 	
 				<div id="user">
 					<div id="joinForm">
-						<form action="/mysite2/user" method="get">
-							<input type="text" name="action" value="join">
+						<form action="/mysite2/user" method="post">
+							<input type="hidden" name="action" value="join">
 	
 							<!-- 아이디 -->
 							<div class="form-group">
@@ -68,7 +68,7 @@
 							<!-- 비밀번호 -->
 							<div class="form-group">
 								<label class="form-text" for="input-pass">패스워드</label> 
-								<input type="text" id="input-pass" name="password" value="" placeholder="비밀번호를 입력하세요"	>
+								<input type="password" id="input-pass" name="password" value="" placeholder="비밀번호를 입력하세요"	>
 							</div>
 	
 							<!-- 이메일 -->
