@@ -13,9 +13,6 @@ import com.javaex.dao.GuestBookDao;
 import com.javaex.util.WebUtil;
 import com.javaex.vo.GuestBookVo;
 
-/**
- * Servlet implementation class GuestBookController
- */
 @WebServlet("/gbc")
 public class GuestBookController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
